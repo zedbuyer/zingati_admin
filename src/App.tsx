@@ -2,10 +2,9 @@ import { Outlet } from "@tanstack/react-router";
 
 const App = () => {
   return (
-    <>
-      <h1>This is the app container</h1>
+    <div className="w-full h-screen bg-slate-50">
       <Outlet />
-    </>
+    </div>
   );
 };
 

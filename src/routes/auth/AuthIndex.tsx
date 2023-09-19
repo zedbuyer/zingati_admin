@@ -2,10 +2,12 @@ import { Outlet } from "@tanstack/react-router";
 
 const AuthIndex = () => {
   return (
-    <>
-      <h1>Auth Page</h1>
-      <Outlet />
-    </>
+    <div className="flex">
+      <div className="w-1/2 bg-purple-500 h-screen" />
+      <div className="w-1/2 h-screen flex flex-col items-center justify-center">
+        <Outlet />
+      </div>
+    </div>
   );
 };
 
