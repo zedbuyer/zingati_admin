@@ -1,4 +1,4 @@
-import { HiHome, HiDatabase, HiPhone, HiUser } from "react-icons/hi";
+import { HiHome, HiDatabase, HiPhone, HiUser, HiLogout } from "react-icons/hi";
 
 const Menu = () => {
   return (
@@ -52,6 +52,11 @@ const Menu = () => {
             </li>
           </ul>
         </details>
+      </li>
+      <li>
+        <a href="#" className="text-red-500 font-bold">
+          <HiLogout /> Log out
+        </a>
       </li>
     </ul>
   );
