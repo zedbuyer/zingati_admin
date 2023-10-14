@@ -3,6 +3,7 @@ import App from "../App";
 import AppIndex from "../routes/app/AppIndex";
 import AuthIndex from "../routes/auth/AuthIndex";
 import Login from "../routes/auth/Login";
+import SendResetEmail from "../routes/auth/SendResetEmail";
 
 const rootRoute = new RootRoute({
   component: App,
@@ -29,9 +30,15 @@ const loginRoute = new Route({
   component: Login,
 });
 
+const sendResetPasswordRoute = new Route({
+  getParentRoute: () => authRoute,
+  path: "forgot-password",
+  component: SendResetEmail,
+});
+
 const routeTree = rootRoute.addChildren([
   appRoute,
-  authRoute.addChildren([loginRoute]),
+  authRoute.addChildren([loginRoute, sendResetPasswordRoute]),
 ]);
 const router = new Router({ routeTree });
 
