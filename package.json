@@ -11,6 +11,8 @@
     "deploy": "yarn build && firebase deploy"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.0.0",
+    "@tanstack/react-query-devtools": "^5.0.1",
     "@tanstack/react-router": "^0.0.1-beta.190",
     "formik": "^2.4.5",
     "react": "^18.2.0",
