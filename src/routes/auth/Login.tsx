@@ -1,7 +1,30 @@
 import { Helmet } from "react-helmet";
 import { Link } from "@tanstack/react-router";
+import { useFormik } from "formik";
+import { useMutation } from "@tanstack/react-query";
+import { loginUser } from "../../utils/queries/auth/index.ts";
 
 const Login = () => {
+  const { mutate, status } = useMutation({
+    mutationFn: loginUser,
+    onSuccess: (response) => {
+      console.log(response);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+  const { handleSubmit, handleChange, isValid } = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    onSubmit: async (values) => {
+      if (isValid) {
+        mutate(values);
+      }
+    },
+  });
   return (
     <>
       <Helmet>
@@ -9,13 +32,15 @@ const Login = () => {
       </Helmet>
       <div className="w-1/2">
         <h1 className="text-4xl font-medium mb-10">Login to continue</h1>
-        <form className="w-full flex flex-col">
+        <form className="w-full flex flex-col" onSubmit={handleSubmit}>
           <div className="form-control w-full mb-3">
             <label htmlFor="#email" className="label">
               <span className="label-text">Email address</span>
             </label>
             <input
               type="email"
+              onChange={handleChange}
+              id="email"
               placeholder="Hint: alex@email.com"
               className="input input-bordered"
             />
@@ -26,8 +51,10 @@ const Login = () => {
             </label>
             <input
               type="password"
-              placeholder="🙈 Enter your password"
+              placeholder="Enter your password"
               className="input input-bordered"
+              id="password"
+              onChange={handleChange}
             />
           </div>
           <Link
@@ -36,7 +63,14 @@ const Login = () => {
           >
             Forgot password?
           </Link>
-          <button className="btn btn-primary mt-6">Login</button>
+          <button
+            className={`btn btn-primary mt-6 ${
+              status == "pending" ? "loading" : null
+            }`}
+            type="submit"
+          >
+            Login
+          </button>
         </form>
       </div>
     </>
