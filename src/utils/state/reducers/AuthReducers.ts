@@ -8,7 +8,7 @@ const authReducer = (state: AuthState, action: AuthAction) => {
   switch (action.type) {
     case "LOGIN":
       localStorage.setItem(
-        import.meta.env.VITE_AUTH_KEY,
+        import.meta.env.ZG_AUTH_KEY,
         action.payload.jwt || ""
       );
       return { ...state, loggedIn: true, user: action.payload.user };

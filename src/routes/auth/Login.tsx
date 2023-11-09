@@ -1,17 +1,33 @@
 import { Helmet } from "react-helmet";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useFormik } from "formik";
 import { useMutation } from "@tanstack/react-query";
 import { loginUser } from "../../utils/queries/auth/index.ts";
+import { useContext } from "react";
+import AuthContext from "../../utils/state/contexts/AuthContext.ts";
 
 const Login = () => {
+  const { dispatch } = useContext(AuthContext);
+  const navigate = useNavigate();
   const { mutate, status } = useMutation({
     mutationFn: loginUser,
     onSuccess: (response) => {
-      console.log(response);
+      dispatch({
+        type: "LOGIN",
+        payload: {
+          ...response.data,
+          loggedIn: true,
+        },
+      });
+      // Navigate to the main app page.
+      navigate({ to: `/` });
     },
     onError: (error) => {
-      console.log(error);
+      if (error.message === "Network Error") {
+        alert("Unable to connect to server. Try again.");
+      } else {
+        alert("Incorrect username or password");
+      }
     },
   });
   const { handleSubmit, handleChange, isValid } = useFormik({

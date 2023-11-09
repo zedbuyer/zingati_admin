@@ -1,4 +1,4 @@
-import { RootRoute, Route, Router } from "@tanstack/react-router";
+import { RootRoute, Route, Router, redirect } from "@tanstack/react-router";
 import App from "../App";
 import AppIndex from "../routes/app/AppIndex";
 import AuthIndex from "../routes/auth/AuthIndex";
@@ -16,6 +16,12 @@ const appRoute = new Route({
   component: AppIndex,
   beforeLoad: async () => {
     // perform a check here to make sure the user is authenticated.
+    console.log("Checking authentication status");
+    // only check the authentication state is correct, leave out evertyhing else.
+    const jwt = localStorage.getItem(import.meta.env.ZG_AUTH_TOKEN);
+    if (jwt === "" || jwt === null) {
+      throw redirect({ to: "/auth" });
+    }
   },
 });
 
