@@ -4,7 +4,7 @@ const initialAuthState: AuthState = {
   loggedIn: false,
 };
 
-const authReducer = async (state: AuthState, action: AuthAction) => {
+function authReducer(state: AuthState, action: AuthAction): AuthState {
   switch (action.type) {
     case "LOGIN":
       localStorage.setItem(
@@ -21,6 +21,6 @@ const authReducer = async (state: AuthState, action: AuthAction) => {
     default:
       return state;
   }
-};
+}
 
 export { initialAuthState, authReducer };
