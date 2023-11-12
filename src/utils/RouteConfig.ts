@@ -18,7 +18,7 @@ const appRoute = new Route({
     // perform a check here to make sure the user is authenticated.
     console.log("Checking authentication status");
     // only check the authentication state is correct, leave out evertyhing else.
-    const jwt = localStorage.getItem(import.meta.env.ZG_AUTH_TOKEN);
+    const jwt = localStorage.getItem(import.meta.env.ZG_AUTH_KEY);
     if (jwt === "" || jwt === null) {
       throw redirect({ to: "/auth" });
     }

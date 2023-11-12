@@ -1,6 +1,18 @@
+import { useNavigate } from "@tanstack/react-router";
+import { useContext } from "react";
 import { HiHome, HiDatabase, HiPhone, HiUser, HiLogout } from "react-icons/hi";
+import AuthContext from "../../../utils/state/contexts/AuthContext";
 
 const Menu = () => {
+  const navigate = useNavigate();
+  const { dispatch } = useContext(AuthContext);
+  const handleLogout = () => {
+    dispatch({ type: "LOGOUT", payload: { loggedIn: false } });
+    navigate({
+      to: "/auth",
+      replace: true,
+    });
+  };
   return (
     <ul className="menu menu-lg rounded-box">
       <li>
@@ -54,9 +66,9 @@ const Menu = () => {
         </details>
       </li>
       <li>
-        <a href="#" className="text-red-500 font-bold">
+        <button onClick={handleLogout} className="text-red-500 font-bold">
           <HiLogout /> Log out
-        </a>
+        </button>
       </li>
     </ul>
   );

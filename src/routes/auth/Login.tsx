@@ -11,8 +11,8 @@ const Login = () => {
   const navigate = useNavigate();
   const { mutate, status } = useMutation({
     mutationFn: loginUser,
-    onSuccess: (response) => {
-      dispatch({
+    onSuccess: async (response) => {
+      await dispatch({
         type: "LOGIN",
         payload: {
           ...response.data,
@@ -20,7 +20,7 @@ const Login = () => {
         },
       });
       // Navigate to the main app page.
-      navigate({ to: `/` });
+      setTimeout(() => navigate({ to: "/", replace: true }), 500);
     },
     onError: (error) => {
       if (error.message === "Network Error") {
