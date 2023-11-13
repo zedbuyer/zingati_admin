@@ -5,6 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { loginUser } from "../../utils/queries/auth/index.ts";
 import { useContext } from "react";
 import AuthContext from "../../utils/state/contexts/AuthContext.ts";
+import { loginAuthSchema } from "../../utils/form_validators/auth.ts";
 
 const Login = () => {
   const { dispatch } = useContext(AuthContext);
@@ -30,11 +31,12 @@ const Login = () => {
       }
     },
   });
-  const { handleSubmit, handleChange, isValid } = useFormik({
+  const { handleSubmit, handleChange, isValid, errors } = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
+    validationSchema: loginAuthSchema,
     onSubmit: async (values) => {
       if (isValid) {
         mutate(values);
@@ -60,6 +62,11 @@ const Login = () => {
               placeholder="Hint: alex@email.com"
               className="input input-bordered"
             />
+            <label className="label">
+              <span className="text-red-500 label-text-alt">
+                {errors.email ? errors.email : ""}
+              </span>
+            </label>
           </div>
           <div className="form-control w-full">
             <label htmlFor="#password" className="label">
@@ -72,6 +79,11 @@ const Login = () => {
               id="password"
               onChange={handleChange}
             />
+            <label className="label">
+              <span className="label-text-alt text-red-500">
+                {errors.password ? errors.password : ""}
+              </span>
+            </label>
           </div>
           <Link
             to="/auth/forgot-password"
@@ -80,6 +92,7 @@ const Login = () => {
             Forgot password?
           </Link>
           <button
+            disabled={status === "pending"}
             className={`btn btn-primary mt-6 ${
               status == "pending" ? "loading" : null
             }`}
