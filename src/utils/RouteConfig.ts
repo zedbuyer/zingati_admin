@@ -5,6 +5,7 @@ import AuthIndex from "../routes/auth/AuthIndex";
 import Login from "../routes/auth/Login";
 import SendResetEmail from "../routes/auth/SendResetEmail";
 import ResetPassword from "../routes/auth/ResetPassword";
+import { dashboardRoute } from "./AppRoutesConfig";
 
 const rootRoute = new RootRoute({
   component: App,
@@ -50,7 +51,7 @@ const resetPasswordRoute = new Route({
 });
 
 const routeTree = rootRoute.addChildren([
-  appRoute,
+  appRoute.addChildren([dashboardRoute]),
   authRoute.addChildren([
     loginRoute,
     sendResetPasswordRoute,
@@ -59,4 +60,4 @@ const routeTree = rootRoute.addChildren([
 ]);
 const router = new Router({ routeTree });
 
-export { router };
+export { router, appRoute };

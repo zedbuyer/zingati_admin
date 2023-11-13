@@ -16,17 +16,12 @@ const Menu = () => {
   return (
     <ul className="menu menu-lg rounded-box">
       <li>
-        <a href="">
-          <HiUser />
-          Your profile
-        </a>
-      </li>
-      <li>
         <a href="/">
           <HiHome />
           Dashboard
         </a>
       </li>
+
       <li>
         <details open>
           <summary>
@@ -64,6 +59,12 @@ const Menu = () => {
             </li>
           </ul>
         </details>
+      </li>
+      <li>
+        <a href="">
+          <HiUser />
+          Your profile
+        </a>
       </li>
       <li>
         <button onClick={handleLogout} className="text-red-500 font-bold">
