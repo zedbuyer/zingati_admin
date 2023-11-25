@@ -1,4 +1,4 @@
-import { useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useContext } from "react";
 import { HiHome, HiDatabase, HiPhone, HiUser, HiLogout } from "react-icons/hi";
 import AuthContext from "../../../utils/state/contexts/AuthContext";
@@ -49,7 +49,7 @@ const Menu = () => {
           </summary>
           <ul>
             <li>
-              <a href="">Customers</a>
+              <Link to="/customers">Customers</Link>
             </li>
             <li>
               <a href="">Notifications</a>

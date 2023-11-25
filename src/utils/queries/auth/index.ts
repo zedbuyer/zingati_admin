@@ -1,4 +1,5 @@
 import axios from "axios";
+import { uri } from "..";
 
 type LoginPayload = {
   email: string;
@@ -8,8 +9,6 @@ type LoginPayload = {
 type ForgotPasswordPayload = {
   email: string;
 };
-
-const uri = import.meta.env.ZG_BASE_URL;
 
 export const loginUser = (payload: LoginPayload) => {
   return axios.post(`${uri}api/auth/local`, {
