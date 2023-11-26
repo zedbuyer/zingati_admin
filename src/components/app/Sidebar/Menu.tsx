@@ -30,6 +30,9 @@ const Menu = () => {
           </summary>
           <ul>
             <li>
+              <a href="">Suppliers</a>
+            </li>
+            <li>
               <a href="">Supplier Products</a>
             </li>
             <li>
