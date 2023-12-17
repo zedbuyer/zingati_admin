@@ -1,9 +1,7 @@
 import { Route } from "@tanstack/react-router";
 import { appRoute } from "./RouteConfig";
 import Dashboard from "../routes/app/Dashboard";
-import Customers from "../routes/app/customers/Index";
 import EditCustomer from "../routes/app/customers/Edit";
-import Suppliers from "../routes/app/suppliers/Index";
 import List from "../routes/app/generic/List";
 import General from "../routes/app/customers/General";
 import AuthInfo from "../routes/app/customers/AuthInfo";
