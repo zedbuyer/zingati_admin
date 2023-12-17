@@ -5,6 +5,8 @@ import Customers from "../routes/app/customers/Index";
 import EditCustomer from "../routes/app/customers/Edit";
 import Suppliers from "../routes/app/suppliers/Index";
 import List from "../routes/app/generic/List";
+import General from "../routes/app/customers/General";
+import AuthInfo from "../routes/app/customers/AuthInfo";
 
 export const dashboardRoute = new Route({
   getParentRoute: () => appRoute,
@@ -19,12 +21,27 @@ export const customersRoute = new Route({
   id: "all-customers",
   component: List,
 });
-const customerRoute = new Route({
+export const customerRoute = new Route({
   getParentRoute: () => appRoute,
   path: "/customers/$customerId",
   id: "customer",
   component: EditCustomer,
 });
+
+customerRoute.addChildren([
+  new Route({
+    getParentRoute: () => customerRoute,
+    id: "general-info",
+    path: "/",
+    component: General,
+  }),
+  new Route({
+    getParentRoute: () => customerRoute,
+    id: "auth-info",
+    path: "/auth-info",
+    component: AuthInfo,
+  }),
+]);
 
 customersRoute.addChildren([customerRoute]);
 
