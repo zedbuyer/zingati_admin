@@ -35,7 +35,10 @@ const renderRows = (data: any, fields: [TableField]) => {
           return renderCell(field, values);
         })}
         <td>
-          <Link to="$itemId" params={{ itemId: datum.id }}>
+          <Link
+            className="btn btn-primary btn-xs"
+            params={{ itemId: datum.id }}
+          >
             <span className="flex flex-row items-center gap-1">
               <LiaPencilAltSolid /> Edit
             </span>

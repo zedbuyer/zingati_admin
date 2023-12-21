@@ -15,13 +15,13 @@ export const dashboardRoute = new Route({
 
 export const customersRoute = new Route({
   getParentRoute: () => appRoute,
-  path: "/customers",
+  path: "customers",
   id: "all-customers",
   component: List,
 });
 export const customerRoute = new Route({
   getParentRoute: () => appRoute,
-  path: "/customers/$customerId",
+  path: "$customerId",
   id: "customer",
   component: EditCustomer,
 });
