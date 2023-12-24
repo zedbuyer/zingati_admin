@@ -6,8 +6,12 @@ import Login from "../routes/auth/Login";
 import SendResetEmail from "../routes/auth/SendResetEmail";
 import ResetPassword from "../routes/auth/ResetPassword";
 import {
+  authInfoRoute,
+  customerRoute,
   customersRoute,
   dashboardRoute,
+  generalInfoRoute,
+  supplierRoute,
   suppliersRoute,
 } from "./AppRoutesConfig";
 
@@ -32,7 +36,7 @@ const appRoute = new Route({
 
 const authRoute = new Route({
   getParentRoute: () => rootRoute,
-  path: "/auth",
+  path: "auth",
   component: AuthIndex,
 });
 
@@ -55,7 +59,13 @@ const resetPasswordRoute = new Route({
 });
 
 const routeTree = rootRoute.addChildren([
-  appRoute.addChildren([dashboardRoute, customersRoute, suppliersRoute]),
+  appRoute.addChildren([
+    dashboardRoute,
+    customersRoute,
+    customerRoute.addChildren([authInfoRoute, generalInfoRoute]),
+    suppliersRoute,
+    supplierRoute,
+  ]),
   authRoute.addChildren([
     loginRoute,
     sendResetPasswordRoute,
@@ -63,5 +73,11 @@ const routeTree = rootRoute.addChildren([
   ]),
 ]);
 const router = new Router({ routeTree });
+
+declare module "@tanstack/react-router" {
+  interface Register {
+    router: typeof router;
+  }
+}
 
 export { router, appRoute };

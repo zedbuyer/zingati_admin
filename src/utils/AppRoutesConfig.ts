@@ -1,10 +1,12 @@
 import { Route } from "@tanstack/react-router";
 import { appRoute } from "./RouteConfig";
-import Dashboard from "../routes/app/Dashboard";
-import EditCustomer from "../routes/app/customers/Edit";
 import List from "../routes/app/generic/List";
+import EditCustomer from "../routes/app/customers/Edit";
 import General from "../routes/app/customers/General";
 import AuthInfo from "../routes/app/customers/AuthInfo";
+import Dashboard from "../routes/app/Dashboard";
+import EditSupplier from "../routes/app/suppliers/Edit";
+import { fetchAuthInfo, fetchCustomer } from "./queries/app/customers";
 
 export const dashboardRoute = new Route({
   getParentRoute: () => appRoute,
@@ -19,33 +21,38 @@ export const customersRoute = new Route({
   id: "all-customers",
   component: List,
 });
+
 export const customerRoute = new Route({
   getParentRoute: () => appRoute,
-  path: "$customerId",
-  id: "customer",
+  path: "customers/$customerId",
+  loader: ({ params: { customerId } }) => fetchCustomer(customerId),
   component: EditCustomer,
 });
 
-customerRoute.addChildren([
-  new Route({
-    getParentRoute: () => customerRoute,
-    id: "general-info",
-    path: "/",
-    component: General,
-  }),
-  new Route({
-    getParentRoute: () => customerRoute,
-    id: "auth-info",
-    path: "/auth-info",
-    component: AuthInfo,
-  }),
-]);
+export const authInfoRoute = new Route({
+  getParentRoute: () => customerRoute,
+  path: "auth-info",
+  component: AuthInfo,
+  loader: ({ params: { customerId } }) => fetchAuthInfo(customerId),
+});
 
-customersRoute.addChildren([customerRoute]);
+export const generalInfoRoute = new Route({
+  getParentRoute: () => customerRoute,
+  component: General,
+  path: "/",
+  id: "general",
+});
 
 export const suppliersRoute = new Route({
   getParentRoute: () => appRoute,
-  path: "/suppliers",
+  path: "suppliers",
   id: "all-suppliers",
   component: List,
+});
+
+export const supplierRoute = new Route({
+  getParentRoute: () => appRoute,
+  path: "suppliers/$supplierId",
+  id: "supplier",
+  component: EditSupplier,
 });

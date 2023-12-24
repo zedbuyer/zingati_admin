@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import PageContainer from "../../../components/app/PageContainer";
-import { Link, useRouter } from "@tanstack/react-router";
+import { useRouter } from "@tanstack/react-router";
 import * as configs from "../generic/configs.json";
 import { useQuery } from "@tanstack/react-query";
 import { fetchGenericList } from "../../../utils/queries/app/generic";
@@ -26,7 +26,7 @@ const renderCell = (field: TableField, values: any) => {
   return <td>{values[field.name]}</td>;
 };
 
-const renderRows = (data: any, fields: [TableField]) => {
+const renderRows = (data: any, fields: [TableField], route: string) => {
   return data.map((datum: any) => {
     const values = datum.attributes;
     return (
@@ -35,14 +35,11 @@ const renderRows = (data: any, fields: [TableField]) => {
           return renderCell(field, values);
         })}
         <td>
-          <Link
-            className="btn btn-primary btn-xs"
-            params={{ itemId: datum.id }}
-          >
+          <a href={`/${route}/${datum.id}`} className="btn btn-primary btn-xs">
             <span className="flex flex-row items-center gap-1">
               <LiaPencilAltSolid /> Edit
             </span>
-          </Link>
+          </a>
         </td>
       </tr>
     );
@@ -55,6 +52,8 @@ const List = () => {
   } = useRouter();
   const route = resolvedLocation.pathname.substring(1);
   const routeInfo = routeConfigs.pages[route];
+
+  console.log(route);
 
   const { data, status } = useQuery({
     queryKey: [routeInfo.title],
@@ -84,7 +83,7 @@ const List = () => {
                   ) : status === "error" ? (
                     <div>Unable to load data</div>
                   ) : (
-                    renderRows(data?.data.data, routeInfo.fields)
+                    renderRows(data?.data.data, routeInfo.fields, route)
                   )}
                 </tbody>
               </table>
