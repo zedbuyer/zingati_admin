@@ -16,7 +16,14 @@ export const fetchAuthInfo = (customerId: string) => {
     populate: ["auth_info"],
   };
 
-  console.log(qs.stringify(query));
-
   return axios.get(`api/customers/${customerId}?${qs.stringify(query)}`);
+};
+
+type AuthInfo = {
+  username: string;
+  email: string;
+};
+
+export const saveAuthInfo = (customerId: string, authInfo: AuthInfo) => {
+  return axios.post(`api/customers/${customerId}`, authInfo);
 };
