@@ -11,6 +11,11 @@ import {
   customersRoute,
   dashboardRoute,
   generalInfoRoute,
+  supAuthInfoRoute,
+  supBasicInfoRoute,
+  supBranchInfoRoute,
+  supMediaInfoRoute,
+  supProductInfoRoute,
   supplierRoute,
   suppliersRoute,
 } from "./AppRoutesConfig";
@@ -64,7 +69,13 @@ const routeTree = rootRoute.addChildren([
     customersRoute,
     customerRoute.addChildren([authInfoRoute, generalInfoRoute]),
     suppliersRoute,
-    supplierRoute,
+    supplierRoute.addChildren([
+      supBasicInfoRoute,
+      supBranchInfoRoute,
+      supProductInfoRoute,
+      supAuthInfoRoute,
+      supMediaInfoRoute,
+    ]),
   ]),
   authRoute.addChildren([
     loginRoute,

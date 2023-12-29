@@ -20,10 +20,16 @@ export const fetchAuthInfo = (customerId: string) => {
 };
 
 type AuthInfo = {
-  username: string;
-  email: string;
+  username?: string;
+  email?: string;
+  blocked?: boolean;
 };
 
-export const saveAuthInfo = (customerId: string, authInfo: AuthInfo) => {
-  return axios.post(`api/customers/${customerId}`, authInfo);
+type SaveAuthInfoPayload = {
+  userId: string;
+  auth_info: AuthInfo;
+};
+
+export const saveAuthInfo = (payload: SaveAuthInfoPayload) => {
+  return axios.put(`api/users/${payload.userId}`, payload.auth_info);
 };
