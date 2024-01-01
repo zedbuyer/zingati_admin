@@ -23,3 +23,5 @@ jobs:
         env:
           FIREBASE_TOKEN: ${{secrets.FIREBASE_TOKEN}}
           PROJECT_ID: zingati-erp
+          ZG_AUTH_KEY: ${{vars.ZG_AUTH_KEY}}
+          ZG_BASE_URL: ${{vars.ZG_BASE_URL}}
