@@ -1,15 +1,26 @@
 import { useFormik } from "formik";
 import { supBasicInfoRoute } from "../../../../utils/AppRoutesConfig";
-import { Editor, EditorState } from "draft-js";
-import { useState } from "react";
-import "draft-js/dist/Draft.css";
+import { useMutation } from "@tanstack/react-query";
+import { saveBasicSupplier } from "../../../../utils/queries/app/suppliers";
+import SaveButton from "../../../../components/app/SaveButton";
+// import { useState } from "react";
 
 const BasicInformation = () => {
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
-
   const {
     data: { data },
   } = supBasicInfoRoute.useLoader();
+  const { supplierId } = supBasicInfoRoute.useParams();
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: saveBasicSupplier,
+    mutationKey: ["save_basic_info"],
+    onSuccess: () => {
+      alert("Supplier saved!");
+    },
+    onError: () => {
+      alert("Unable to save supplier information");
+    },
+  });
 
   const { values, handleChange, handleSubmit, isValid, handleReset } =
     useFormik({
@@ -18,36 +29,74 @@ const BasicInformation = () => {
         description: data.attributes.description,
         email: data.attributes.email,
         featured: data.attributes.featured,
-        import_url: data.attributes.import_url,
-        api_key: data.attributes.api_key,
       },
-      onSubmit: (_) => {
-        // TODO: Do something here
+      onSubmit: (values) => {
+        if (isValid) {
+          mutate({
+            id: supplierId,
+            data: values,
+          });
+        }
       },
     });
 
   return (
-    <form onChange={handleChange} onReset={handleReset}>
-      <div className="grid grid-cols-2 w-full gap-3">
+    <form onChange={handleChange} onSubmit={handleSubmit} onReset={handleReset}>
+      <div className="grid grid-cols-2 w-full mb-5 gap-3">
         <label className="form-control">
           <div className="label">
             <span className="label-text">Name</span>
           </div>
-          <input type="text" className="input input-bordered" />
+          <input
+            type="text"
+            value={values.name}
+            onChange={handleChange}
+            name="name"
+            className="input input-bordered"
+          />
         </label>
         <label className="form-control">
           <div className="label">
             <span className="label-text">Email</span>
           </div>
-          <input type="email" className="input input-bordered" />
+          <input
+            type="email"
+            name="email"
+            onChange={handleChange}
+            value={values.email}
+            className="textarea textarea-bordered"
+          />
         </label>
         <label className="form-control col-span-2">
           <div className="label">
             <span className="label-text">Description</span>
           </div>
-          <Editor editorState={editorState} />
+          <textarea
+            name="description"
+            onChange={handleChange}
+            value={values.description}
+            className="input input-bordered"
+            style={{
+              height: 200,
+            }}
+          ></textarea>
         </label>
+        <div className="flex">
+          <div className="form-control">
+            <label htmlFor="" className="label cursor-pointer">
+              <span className="label-text mr-5">Supplier Featured?</span>
+              <input
+                type="checkbox"
+                checked={Boolean(values.featured)}
+                onChange={handleChange}
+                name="featured"
+                className="toggle"
+              />
+            </label>
+          </div>
+        </div>
       </div>
+      <SaveButton title="Save" isPending={isPending} />
     </form>
   );
 };
