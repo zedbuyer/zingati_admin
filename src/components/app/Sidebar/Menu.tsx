@@ -1,4 +1,4 @@
-import { useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useContext } from "react";
 import { HiHome, HiDatabase, HiPhone, HiUser, HiLogout } from "react-icons/hi";
 import AuthContext from "../../../utils/state/contexts/AuthContext";
@@ -16,17 +16,12 @@ const Menu = () => {
   return (
     <ul className="menu menu-lg rounded-box">
       <li>
-        <a href="">
-          <HiUser />
-          Your profile
-        </a>
-      </li>
-      <li>
         <a href="/">
           <HiHome />
           Dashboard
         </a>
       </li>
+
       <li>
         <details open>
           <summary>
@@ -34,6 +29,9 @@ const Menu = () => {
             Product Management
           </summary>
           <ul>
+            <li>
+              <Link to="/suppliers">Suppliers</Link>
+            </li>
             <li>
               <a href="">Supplier Products</a>
             </li>
@@ -54,7 +52,7 @@ const Menu = () => {
           </summary>
           <ul>
             <li>
-              <a href="">Customers</a>
+              <Link to="/customers">Customers</Link>
             </li>
             <li>
               <a href="">Notifications</a>
@@ -64,6 +62,12 @@ const Menu = () => {
             </li>
           </ul>
         </details>
+      </li>
+      <li>
+        <a href="">
+          <HiUser />
+          Your profile
+        </a>
       </li>
       <li>
         <button onClick={handleLogout} className="text-red-500 font-bold">

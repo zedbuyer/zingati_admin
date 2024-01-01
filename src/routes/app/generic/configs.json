@@ -1,0 +1,57 @@
+{
+  "pages": {
+    "customers": {
+      "title": "All Customers",
+      "export": true,
+      "filters": [
+        {
+          "name": "first_name",
+          "label": "First Name"
+        },
+        {
+          "name": "last_name",
+          "label": "Last Name"
+        }
+      ],
+      "populate": {
+        "auth_info": {
+          "fields": ["email"]
+        }
+      },
+      "fields": [
+        {
+          "name": "first_name",
+          "label": "First Name"
+        },
+        {
+          "name": "last_name",
+          "label": "Last Name"
+        },
+        {
+          "name": "email",
+          "label": "Email address",
+          "parent": "auth_info"
+        }
+      ]
+    },
+    "suppliers": {
+      "title": "All Suppliers",
+      "export": true,
+      "filters": ["name"],
+      "fields": [
+        {
+          "name": "name",
+          "label": "Name"
+        },
+        {
+          "name": "email",
+          "label": "Email address"
+        },
+        {
+          "name": "createdAt",
+          "label": "Date created"
+        }
+      ]
+    }
+  }
+}

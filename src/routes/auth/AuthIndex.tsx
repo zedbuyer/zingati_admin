@@ -6,7 +6,7 @@ const AuthIndex = () => {
       <div
         className="w-1/2 h-screen"
         style={{
-          backgroundImage: `url(images/auth_background.jpg)`,
+          backgroundImage: `url(/images/auth_background.jpg)`,
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",

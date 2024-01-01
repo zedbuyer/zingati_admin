@@ -10,7 +10,7 @@ const App = () => {
   const [authState, dispatch] = useReducer(authReducer, initialAuthState);
   return (
     <AuthContext.Provider value={{ authState, dispatch }}>
-      <div className="w-full h-screen bg-slate-50">
+      <div className="w-full h-screen bg-slate-100">
         <Outlet />
       </div>
     </AuthContext.Provider>
